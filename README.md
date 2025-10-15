@@ -1,16 +1,40 @@
-# React + Vite
+# 🧠 Web3Edu DAO Invitation Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository hosts the landing page for the Web3Edu DAO invite, linked to the `sbt-dimikog-card` Soulbound Token issued during the PoE Festival 2025.
 
-Currently, two official plugins are available:
+## 🌐 Live URL
+👉 [https://invite.dimikog.org](https://invite.dimikog.org)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Purpose
 
-## React Compiler
+Visitors who mint the Dimitris G. Kogias SBT can join the DAO and participate in shaping the future of blockchain education and research.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🗳️ Coming Soon
 
-## Expanding the ESLint configuration
+- Snapshot voting space  
+- Discord governance role  
+- Contribution guidelines  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🇬🇷 Σελίδα Πρόσκλησης για το Web3Edu DAO
+
+Αυτό το αποθετήριο φιλοξενεί τη σελίδα πρόσκλησης για το Web3Edu DAO, η οποία σχετίζεται με το Soulbound Token `sbt-dimikog-card` που εκδόθηκε κατά τη διάρκεια του Φεστιβάλ PoE 2025.
+
+## 🌐 Ζωντανός Σύνδεσμος
+👉 [https://invite.dimikog.org](https://invite.dimikog.org)
+
+## 🛠 Σκοπός
+
+Οι επισκέπτες που αποκτούν το SBT του Δημήτρη Γ. Κόγια μπορούν να συμμετέχουν στο DAO και να συμβάλουν στη διαμόρφωση του μέλλοντος της εκπαίδευσης και έρευνας στο blockchain.
+
+## 🗳️ Επερχόμενα
+
+- Χώρος ψηφοφορίας στο Snapshot  
+- Ρόλος στο Discord για συμμετοχή στη λήψη αποφάσεων  
+- Οδηγίες για συμμετοχή
+
+---
+
+Built with 💙 by [@dimikog](https://dimikog.org)  
+Κατασκευάστηκε με 💙 από τον [@dimikog](https://dimikog.org)
