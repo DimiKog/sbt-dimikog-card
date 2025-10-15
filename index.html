@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <title>Web3Edu DAO Invite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -35,13 +35,19 @@
       color: white;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
       text-decoration: none;
+      cursor: pointer;
     }
 
     #status {
       margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    #walletInfo {
+      margin-top: 1rem;
       font-size: 0.9rem;
+      color: #333;
     }
   </style>
 </head>
@@ -59,8 +65,11 @@
       <li>🗳️ Vote on DAO decisions</li>
     </ul>
 
-    <!-- Mint Button and Status -->
-    <button id="mintBtn" onclick="mintSBT()">Mint Your Web3Edu SBT</button>
+    <button id="connectButton">Connect Wallet</button>
+    <button id="mintButton" style="display:none;">Mint Your Web3Edu SBT</button>
+    <button id="disconnectButton" style="display:none;">Disconnect</button>
+
+    <div id="walletInfo"></div>
     <div id="status"></div>
 
     <a class="button" href="https://discord.gg/YOUR-DISCORD-LINK" target="_blank">Join Our Discord</a>
@@ -73,36 +82,71 @@
       "function hasClaimed(address) public view returns (bool)"
     ];
 
-    let signer, contract;
+    let provider, signer, contract;
+    const connectButton = document.getElementById("connectButton");
+    const mintButton = document.getElementById("mintButton");
+    const disconnectButton = document.getElementById("disconnectButton");
+    const walletInfo = document.getElementById("walletInfo");
+    const status = document.getElementById("status");
 
-    async function mintSBT() {
-      const status = document.getElementById("status");
+    async function connectWallet() {
+      if (!window.ethereum) {
+        alert("Please install MetaMask to continue.");
+        return;
+      }
+
       try {
-        if (!window.ethereum) {
-          status.textContent = "Please install MetaMask to mint your SBT.";
-          return;
-        }
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        signer = provider.getSigner();
 
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        signer = await provider.getSigner();
         const address = await signer.getAddress();
+        walletInfo.innerText = `Connected as ${address}`;
+        connectButton.style.display = "none";
+        mintButton.style.display = "inline-block";
+        disconnectButton.style.display = "inline-block";
+
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
         const alreadyMinted = await contract.hasClaimed(address);
         if (alreadyMinted) {
-          status.textContent = "✅ You’ve already minted this SBT.";
-          return;
+          status.innerHTML = "✅ You have already minted your SBT.";
+        } else {
+          status.innerText = "Ready to mint!";
         }
-
-        const tx = await contract.mintReward(address);
-        status.textContent = "⏳ Minting in progress…";
-        await tx.wait();
-        status.textContent = "🎉 Success! Your Web3Edu SBT has been minted.";
       } catch (err) {
         console.error(err);
-        status.textContent = "❌ Error: " + (err.message || "Minting failed.");
+        status.innerText = "❌ Failed to connect.";
       }
     }
+
+    async function mintSBT() {
+      status.innerText = "⏳ Minting...";
+      try {
+        const address = await signer.getAddress();
+        const tx = await contract.mintReward(address);
+        await tx.wait();
+        status.innerHTML = `✅ Mint successful! View on <a href='https://blockscout.dimikog.org/address/${address}' target='_blank'>Blockscout</a>`;
+      } catch (err) {
+        console.error(err);
+        status.innerText = "❌ Mint failed or already claimed.";
+      }
+    }
+
+    function disconnectWallet() {
+      provider = null;
+      signer = null;
+      contract = null;
+      connectButton.style.display = "inline-block";
+      mintButton.style.display = "none";
+      disconnectButton.style.display = "none";
+      walletInfo.innerText = "";
+      status.innerText = "Disconnected.";
+    }
+
+    connectButton.onclick = connectWallet;
+    mintButton.onclick = mintSBT;
+    disconnectButton.onclick = disconnectWallet;
   </script>
 </body>
 
