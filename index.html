@@ -315,7 +315,7 @@
       <h2>About this token</h2>
       <ul>
         <li>Open mint: available to anyone with an Ethereum-compatible wallet.</li>
-        <li>Non-transferable design ensures provenance on the QBFT_Besu_EduNet network.</li>
+        <li>Anchored on the QBFT_Besu_EduNet network (chain ID 424242) for provenance.</li>
         <li>Metadata stored on IPFS via Pinata for transparent, verifiable ownership.</li>
       </ul>
     </section>
@@ -323,6 +323,10 @@
     <section class="details">
       <h2>Contract reference</h2>
       <dl>
+        <div class="row">
+          <dt>Network</dt>
+          <dd>QBFT_Besu_EduNet — chain ID 424242 — symbol EDU-D</dd>
+        </div>
         <div class="row">
           <dt>Contract address</dt>
           <dd><code>0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408</code></dd>
@@ -343,6 +347,12 @@
 
   <script>
     const CONTRACT_ADDRESS = "0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408";
+    const EXPECTED_NETWORK = {
+      chainId: 424242,
+      name: "QBFT_Besu_EduNet",
+      rpc: "https://rpc.dimikog.org/rpc/",
+      symbol: "EDU-D"
+    };
     const ABI = [
       "function mint() public",
       "function hasMinted(address) public view returns (bool)"
@@ -384,14 +394,27 @@
         signer = provider.getSigner();
 
         const address = await signer.getAddress();
-        walletInfo.innerText = `Connected wallet: ${address}`;
+        const network = await provider.getNetwork();
+
+        walletInfo.innerHTML = `Connected wallet: ${address}<br/>Network: ${network.name || "Custom"} (chain ID ${network.chainId})`;
         connectButton.style.display = "none";
         mintButton.style.display = "none";
         disconnectButton.style.display = "inline-block";
 
-        const contractCode = await provider.getCode(CONTRACT_ADDRESS);
-        if (!contractCode || contractCode === "0x") {
-          status.innerText = "Wallet connected on an unsupported network. Please switch to the QBFT_Besu_EduNet network and reconnect.";
+        if (network.chainId !== EXPECTED_NETWORK.chainId) {
+          status.innerHTML = `Wallet connected on <strong>chain ID ${network.chainId}</strong>. Switch to <strong>${EXPECTED_NETWORK.name}</strong> (chain ID ${EXPECTED_NETWORK.chainId}) and reconnect.`;
+          return;
+        }
+
+        try {
+          const contractCode = await provider.getCode(CONTRACT_ADDRESS);
+          if (!contractCode || contractCode === "0x") {
+            status.innerText = `Contract not found on ${EXPECTED_NETWORK.name}. Please confirm RPC ${EXPECTED_NETWORK.rpc} is reachable.`;
+            return;
+          }
+        } catch (codeError) {
+          console.warn("Unable to fetch contract code:", codeError);
+          status.innerText = `Connected to ${EXPECTED_NETWORK.name}, but contract lookup failed. Please retry shortly.`;
           return;
         }
 
@@ -414,9 +437,9 @@
           status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Dimikog Block Explorer</a>.`;
           await showSBTImage();
         } else if (statusVerified) {
-          status.innerText = "Wallet connected. Ready to mint your credential.";
+          status.innerText = `Wallet connected. Ready to mint your credential on ${EXPECTED_NETWORK.name}.`;
         } else {
-          status.innerText = "Wallet connected, but the credential status could not be verified. Please confirm you are on the QBFT_Besu_EduNet network before minting.";
+          status.innerText = `Wallet connected, but the credential status could not be verified. Please confirm you remain on ${EXPECTED_NETWORK.name} before minting.`;
         }
       } catch (err) {
         console.error(err);
