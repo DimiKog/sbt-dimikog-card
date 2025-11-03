@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Web3Edu DAO Invite</title>
+  <title>Professional Profile SBT — Dimitrios G. Kogias</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
@@ -49,37 +49,36 @@
       font-size: 0.9rem;
       color: #333;
     }
+
+    #sbtImage {
+      display: none;
+      margin-top: 1rem;
+      width: 100%;
+      border-radius: 12px;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>🎓 Welcome to the Web3Edu DAO</h1>
-    <p>This Soulbound Token certifies your direct engagement with Dr. Dimitris G. Kogias during the PoE Festival 2025.
-    </p>
-    <p>As a holder of this SBT, you're invited to join the Web3Edu DAO – a collective shaping the future of gamified
-      blockchain education.</p>
-    <ul>
-      <li>💡 Propose features for the next PoE game</li>
-      <li>🧠 Collaborate on research & tools</li>
-      <li>🗳️ Vote on DAO decisions</li>
-    </ul>
+    <h1>🎓 Professional Profile SBT Card</h1>
+    <p>This Soulbound Token represents the professional profile of Dimitrios G. Kogias, certifying your verified
+      association.</p>
 
     <button id="connectButton">Connect Wallet</button>
-    <button id="mintButton" style="display:none;">Mint Your Web3Edu SBT</button>
+    <button id="mintButton" style="display:none;">Mint Your SBT Card</button>
     <button id="disconnectButton" style="display:none;">Disconnect</button>
 
     <div id="walletInfo"></div>
     <div id="status"></div>
-
-    <a class="button" href="https://discord.gg/YOUR-DISCORD-LINK" target="_blank">Join Our Discord</a>
+    <img id="sbtImage" />
   </div>
 
   <script>
     const CONTRACT_ADDRESS = "0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408";
     const ABI = [
-      "function mintReward(address to) public",
-      "function hasClaimed(address) public view returns (bool)"
+      "function mint() public",
+      "function hasMinted(address) public view returns (bool)"
     ];
 
     let provider, signer, contract;
@@ -88,6 +87,23 @@
     const disconnectButton = document.getElementById("disconnectButton");
     const walletInfo = document.getElementById("walletInfo");
     const status = document.getElementById("status");
+    const sbtImage = document.getElementById("sbtImage");
+
+    async function showSBTImage() {
+      try {
+        const response = await fetch("https://cloudflare-ipfs.com/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24");
+        const metadata = await response.json();
+        let imageUrl = metadata.image;
+        if (imageUrl.startsWith("ipfs://")) {
+          imageUrl = imageUrl.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/");
+        }
+        sbtImage.src = imageUrl;
+        sbtImage.style.display = "block";
+      } catch (err) {
+        console.error("Failed to load SBT image:", err);
+        sbtImage.style.display = "none";
+      }
+    }
 
     async function connectWallet() {
       if (!window.ethereum) {
@@ -108,9 +124,10 @@
 
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
-        const alreadyMinted = await contract.hasClaimed(address);
+        const alreadyMinted = await contract.hasMinted(address);
         if (alreadyMinted) {
           status.innerHTML = "✅ You have already minted your SBT.";
+          await showSBTImage();
         } else {
           status.innerText = "Ready to mint!";
         }
@@ -124,9 +141,10 @@
       status.innerText = "⏳ Minting...";
       try {
         const address = await signer.getAddress();
-        const tx = await contract.mintReward(address);
+        const tx = await contract.mint();
         await tx.wait();
-        status.innerHTML = `✅ Mint successful! View on <a href='https://blockscout.dimikog.org/address/${address}' target='_blank'>Blockscout</a>`;
+        status.innerHTML = `✅ Mint successful! View on <a href='https://blockscout.dimikog.org/address/${address}' target='_blank'>Blockscout</a> | <a href="ipfs://bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24" target="_blank">View Metadata</a>`;
+        await showSBTImage();
       } catch (err) {
         console.error(err);
         status.innerText = "❌ Mint failed or already claimed.";
@@ -142,6 +160,7 @@
       disconnectButton.style.display = "none";
       walletInfo.innerText = "";
       status.innerText = "Disconnected.";
+      sbtImage.style.display = "none";
     }
 
     connectButton.onclick = connectWallet;
