@@ -316,7 +316,7 @@
       <ul>
         <li>Open mint: available to anyone with an Ethereum-compatible wallet.</li>
         <li>Non-transferable design ensures provenance on the dimikog network.</li>
-        <li>Metadata stored on IPFS for transparent, verifiable ownership.</li>
+        <li>Metadata stored on IPFS via Pinata for transparent, verifiable ownership.</li>
       </ul>
     </section>
 
@@ -329,13 +329,13 @@
         </div>
         <div class="row">
           <dt>Explorer</dt>
-          <dd><a href="https://blockscout.dimikog.org/address/0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408" target="_blank"
-              rel="noreferrer">Open in Blockscout</a></dd>
+          <dd><a href="https://blockexplorer.dimikog.org/address/0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408" target="_blank"
+              rel="noreferrer">View on Dimikog Block Explorer</a></dd>
         </div>
         <div class="row">
           <dt>Metadata</dt>
-          <dd><a href="https://cloudflare-ipfs.com/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24"
-              target="_blank" rel="noreferrer">View IPFS JSON</a></dd>
+          <dd><a href="https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24"
+              target="_blank" rel="noreferrer">View IPFS JSON via Pinata</a></dd>
         </div>
       </dl>
     </section>
@@ -358,11 +358,11 @@
 
     async function showSBTImage() {
       try {
-        const response = await fetch("https://cloudflare-ipfs.com/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24");
+        const response = await fetch("https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24");
         const metadata = await response.json();
         let imageUrl = metadata.image;
         if (imageUrl.startsWith("ipfs://")) {
-          imageUrl = imageUrl.replace("ipfs://", "https://cloudflare-ipfs.com/ipfs/");
+          imageUrl = imageUrl.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/");
         }
         sbtImage.src = imageUrl;
         sbtImage.style.display = "block";
@@ -393,7 +393,7 @@
 
         const alreadyMinted = await contract.hasMinted(address);
         if (alreadyMinted) {
-          status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockscout.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Blockscout</a>.`;
+          status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Dimikog Block Explorer</a>.`;
           await showSBTImage();
         } else {
           status.innerText = "Wallet connected. Ready to mint your credential.";
@@ -410,7 +410,7 @@
         const address = await signer.getAddress();
         const tx = await contract.mint();
         await tx.wait();
-        status.innerHTML = `✅ Credential issued. Review your wallet on <a href='https://blockscout.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Blockscout</a> or inspect the <a href="ipfs://bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24" target="_blank" rel="noreferrer">IPFS metadata</a>.`;
+        status.innerHTML = `✅ Credential issued. Review your wallet on the <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Dimikog Block Explorer</a> or inspect the <a href="https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24" target="_blank" rel="noreferrer">Pinata-hosted IPFS metadata</a>.`;
         await showSBTImage();
       } catch (err) {
         console.error(err);
