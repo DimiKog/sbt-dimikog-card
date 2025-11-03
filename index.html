@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Professional Profile SBT — Dimitrios G. Kogias</title>
+  <title data-i18n-key="pageTitle">Professional Profile SBT — Dimitrios G. Kogias</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
@@ -123,6 +123,44 @@
     }
 
     .button:focus-visible {
+      outline: 3px solid rgba(0, 87, 216, 0.35);
+      outline-offset: 2px;
+    }
+
+    .language-switcher {
+      align-self: flex-end;
+      display: flex;
+      gap: 0.35rem;
+      padding: 0.35rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .language-option {
+      border: none;
+      background: transparent;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .language-option.is-active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(0, 87, 216, 0.25);
+    }
+
+    .language-option:hover {
+      color: var(--accent);
+    }
+
+    .language-option:focus-visible {
       outline: 3px solid rgba(0, 87, 216, 0.35);
       outline-offset: 2px;
     }
@@ -257,6 +295,10 @@
       .button {
         width: 100%;
       }
+
+      .language-switcher {
+        align-self: center;
+      }
     }
 
     @media (max-width: 420px) {
@@ -290,56 +332,60 @@
 
 <body>
   <main class="page">
+    <div class="language-switcher" role="group" data-i18n-key="languageSwitcherLabel" data-i18n-attr="aria-label" aria-label="Language selection">
+      <button class="language-option is-active" type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button class="language-option" type="button" data-lang="el" aria-pressed="false">ΕΛ</button>
+    </div>
     <header class="hero">
-      <span class="hero__eyebrow">Soulbound Credential</span>
-      <h1>Professional Profile SBT</h1>
-      <p class="hero__lead">Mint a non-transferable commemorative credential that celebrates your connection with
+      <span class="hero__eyebrow" data-i18n-key="heroEyebrow">Soulbound Credential</span>
+      <h1 data-i18n-key="heroHeading">Professional Profile SBT</h1>
+      <p class="hero__lead" data-i18n-key="heroLead">Mint a non-transferable commemorative credential that celebrates your connection with
         Dimitrios G. Kogias and the dimikog ecosystem.</p>
     </header>
 
     <section class="card">
-      <h2>Issue your credential</h2>
-      <p>Any wallet holder can connect, sign once, and mint the Professional Profile Soulbound Token directly to their
+      <h2 data-i18n-key="issueHeading">Issue your credential</h2>
+      <p data-i18n-key="issueDescription">Any wallet holder can connect, sign once, and mint the Professional Profile Soulbound Token directly to their
         account.</p>
       <div class="actions">
-        <button class="button button--primary" id="connectButton">Connect Wallet</button>
-        <button class="button button--primary" id="mintButton" style="display:none;">Issue Credential</button>
-        <button class="button button--subtle" id="disconnectButton" style="display:none;">Disconnect</button>
+        <button class="button button--primary" id="connectButton" data-i18n-key="buttonConnect">Connect Wallet</button>
+        <button class="button button--primary" id="mintButton" data-i18n-key="buttonMint" style="display:none;">Issue Credential</button>
+        <button class="button button--subtle" id="disconnectButton" data-i18n-key="buttonDisconnect" style="display:none;">Disconnect</button>
       </div>
       <div id="walletInfo" class="info-panel"></div>
       <div id="status" class="info-panel info-panel--status"></div>
-      <img id="sbtImage" alt="Preview of the Professional Profile Soulbound Token" />
+      <img id="sbtImage" alt="Preview of the Professional Profile Soulbound Token" data-i18n-key="sbtImageAlt" data-i18n-attr="alt" />
     </section>
 
     <section class="details">
-      <h2>About this token</h2>
+      <h2 data-i18n-key="aboutHeading">About this token</h2>
       <ul>
-        <li>Open mint: available to anyone with an Ethereum-compatible wallet.</li>
-        <li>Anchored on the QBFT_Besu_EduNet network (chain ID 424242) for provenance.</li>
-        <li>Metadata stored on IPFS via Pinata for transparent, verifiable ownership.</li>
+        <li data-i18n-key="aboutItem1">Open mint: available to anyone with an Ethereum-compatible wallet.</li>
+        <li data-i18n-key="aboutItem2">Anchored on the QBFT_Besu_EduNet network (chain ID 424242) for provenance.</li>
+        <li data-i18n-key="aboutItem3">Metadata stored on IPFS via Pinata for transparent, verifiable ownership.</li>
       </ul>
     </section>
 
     <section class="details">
-      <h2>Contract reference</h2>
+      <h2 data-i18n-key="contractHeading">Contract reference</h2>
       <dl>
         <div class="row">
-          <dt>Network</dt>
-          <dd>QBFT_Besu_EduNet — chain ID 424242 — symbol EDU-D</dd>
+          <dt data-i18n-key="contractNetworkLabel">Network</dt>
+          <dd data-i18n-key="contractNetworkValue">QBFT_Besu_EduNet — chain ID 424242 — symbol EDU-D</dd>
         </div>
         <div class="row">
-          <dt>Contract address</dt>
+          <dt data-i18n-key="contractAddressLabel">Contract address</dt>
           <dd><code>0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408</code></dd>
         </div>
         <div class="row">
-          <dt>Explorer</dt>
+          <dt data-i18n-key="contractExplorerLabel">Explorer</dt>
           <dd><a href="https://blockexplorer.dimikog.org/address/0xCb3fe4c1C2c618f6a75D324008eCb63c6Cb49408" target="_blank"
-              rel="noreferrer">View on Dimikog Block Explorer</a></dd>
+              rel="noreferrer" data-i18n-key="contractExplorerLink">View on Dimikog Block Explorer</a></dd>
         </div>
         <div class="row">
-          <dt>Metadata</dt>
+          <dt data-i18n-key="contractMetadataLabel">Metadata</dt>
           <dd><a href="https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24"
-              target="_blank" rel="noreferrer">View IPFS JSON via Pinata</a></dd>
+              target="_blank" rel="noreferrer" data-i18n-key="contractMetadataLink">View IPFS JSON via Pinata</a></dd>
         </div>
       </dl>
     </section>
@@ -357,25 +403,250 @@
       "function mint() public",
       "function hasMinted(address) public view returns (bool)"
     ];
+    const METADATA_URL = "https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24";
+    const BLOCK_EXPLORER_BASE = "https://blockexplorer.dimikog.org";
+
+    const translations = {
+      en: {
+        pageTitle: "Professional Profile SBT — Dimitrios G. Kogias",
+        heroEyebrow: "Soulbound Credential",
+        heroHeading: "Professional Profile SBT",
+        heroLead: "Mint a non-transferable commemorative credential that celebrates your connection with Dimitrios G. Kogias and the dimikog ecosystem.",
+        issueHeading: "Issue your credential",
+        issueDescription: "Any wallet holder can connect, sign once, and mint the Professional Profile Soulbound Token directly to their account.",
+        buttonConnect: "Connect Wallet",
+        buttonMint: "Issue Credential",
+        buttonDisconnect: "Disconnect",
+        aboutHeading: "About this token",
+        aboutItem1: "Open mint: available to anyone with an Ethereum-compatible wallet.",
+        aboutItem2: "Anchored on the QBFT_Besu_EduNet network (chain ID 424242) for provenance.",
+        aboutItem3: "Metadata stored on IPFS via Pinata for transparent, verifiable ownership.",
+        contractHeading: "Contract reference",
+        contractNetworkLabel: "Network",
+        contractNetworkValue: "QBFT_Besu_EduNet — chain ID 424242 — symbol EDU-D",
+        contractAddressLabel: "Contract address",
+        contractExplorerLabel: "Explorer",
+        contractExplorerLink: "View on Dimikog Block Explorer",
+        contractMetadataLabel: "Metadata",
+        contractMetadataLink: "View IPFS JSON via Pinata",
+        languageSwitcherLabel: "Language selection",
+        sbtImageAlt: "Preview of the Professional Profile Soulbound Token",
+        network_custom: "Custom",
+        alert_noWallet: "A Web3 wallet (e.g., MetaMask) is required to continue.",
+        walletInfo_connected: "Connected wallet: {address}<br/>Network: {network} (chain ID {chainId})",
+        status_wrongNetwork: "Wallet connected on <strong>chain ID {chainId}</strong>. Switch to <strong>{expectedName}</strong> (chain ID {expectedChainId}) and reconnect.",
+        status_contractMissing: "Contract not found on {network}. Please confirm RPC {rpc} is reachable.",
+        status_contractLookupFailed: "Connected to {network}, but contract lookup failed. Please retry shortly.",
+        status_ready: "Wallet connected. Ready to mint your credential on {network}.",
+        status_unverified: "Wallet connected, but the credential status could not be verified. Please confirm you remain on {network} before minting.",
+        status_alreadyMinted: "✅ Credential already issued for this wallet. <a href=\"{explorerAddressUrl}\" target=\"_blank\" rel=\"noreferrer\">Review on Dimikog Block Explorer</a>.",
+        status_minting: "⏳ Submitting transaction...",
+        status_mintSuccess: "✅ Credential issued. Review your wallet on the <a href=\"{explorerAddressUrl}\" target=\"_blank\" rel=\"noreferrer\">Dimikog Block Explorer</a> or inspect the <a href=\"{metadataUrl}\" target=\"_blank\" rel=\"noreferrer\">Pinata-hosted IPFS metadata</a>.",
+        status_mintError: "❌ Mint unsuccessful. Please try again in a few moments.",
+        status_connectError: "❌ Connection request declined or failed.",
+        status_disconnected: "Wallet disconnected."
+      },
+      el: {
+        pageTitle: "Επαγγελματικό Προφίλ SBT — Δημήτριος Γ. Κόγιας",
+        heroEyebrow: "Διαπιστευτήριο Soulbound",
+        heroHeading: "Επαγγελματικό Προφίλ SBT",
+        heroLead: "Κόψτε ένα μη μεταβιβάσιμο αναμνηστικό διαπιστευτήριο που αναδεικνύει τη σύνδεσή σας με τον Δημήτριο Γ. Κόγια και το οικοσύστημα dimikog.",
+        issueHeading: "Έκδοση του διαπιστευτηρίου σας",
+        issueDescription: "Κάθε κάτοχος πορτοφολιού μπορεί να συνδεθεί, να υπογράψει μία φορά και να κόψει το Soulbound Token Επαγγελματικού Προφίλ απευθείας στον λογαριασμό του.",
+        buttonConnect: "Σύνδεση Πορτοφολιού",
+        buttonMint: "Έκδοση Διαπιστευτηρίου",
+        buttonDisconnect: "Αποσύνδεση",
+        aboutHeading: "Σχετικά με το token",
+        aboutItem1: "Ανοιχτό mint: διαθέσιμο σε οποιονδήποτε με πορτοφόλι συμβατό με Ethereum.",
+        aboutItem2: "Αγκυρωμένο στο δίκτυο QBFT_Besu_EduNet (αναγνωριστικό αλυσίδας 424242) για τεκμηρίωση προέλευσης.",
+        aboutItem3: "Τα μεταδεδομένα φιλοξενούνται στο IPFS μέσω Pinata για διαφανή, επαληθεύσιμη ιδιοκτησία.",
+        contractHeading: "Στοιχεία συμβολαίου",
+        contractNetworkLabel: "Δίκτυο",
+        contractNetworkValue: "QBFT_Besu_EduNet — αναγνωριστικό αλυσίδας 424242 — σύμβολο EDU-D",
+        contractAddressLabel: "Διεύθυνση συμβολαίου",
+        contractExplorerLabel: "Εξερευνητής",
+        contractExplorerLink: "Προβολή στον Dimikog Block Explorer",
+        contractMetadataLabel: "Μεταδεδομένα",
+        contractMetadataLink: "Προβολή του JSON IPFS μέσω Pinata",
+        languageSwitcherLabel: "Επιλογή γλώσσας",
+        sbtImageAlt: "Προεπισκόπηση του Soulbound Token Επαγγελματικού Προφίλ",
+        network_custom: "Προσαρμοσμένο",
+        alert_noWallet: "Απαιτείται πορτοφόλι Web3 (π.χ. MetaMask) για να συνεχίσετε.",
+        walletInfo_connected: "Συνδεδεμένο πορτοφόλι: {address}<br/>Δίκτυο: {network} (αναγνωριστικό αλυσίδας {chainId})",
+        status_wrongNetwork: "Το πορτοφόλι συνδέθηκε με <strong>αναγνωριστικό αλυσίδας {chainId}</strong>. Μεταβείτε στο <strong>{expectedName}</strong> (αναγνωριστικό αλυσίδας {expectedChainId}) και επανασυνδεθείτε.",
+        status_contractMissing: "Το συμβόλαιο δεν βρέθηκε στο {network}. Βεβαιωθείτε ότι το RPC {rpc} είναι προσβάσιμο.",
+        status_contractLookupFailed: "Συνδεθήκατε στο {network}, αλλά η αναζήτηση του συμβολαίου απέτυχε. Προσπαθήστε ξανά σε λίγο.",
+        status_ready: "Το πορτοφόλι συνδέθηκε. Είστε έτοιμοι να κόψετε το διαπιστευτήριο σας στο {network}.",
+        status_unverified: "Το πορτοφόλι συνδέθηκε, αλλά δεν ήταν δυνατή η επαλήθευση του διαπιστευτηρίου. Επιβεβαιώστε ότι παραμένετε στο {network} πριν συνεχίσετε.",
+        status_alreadyMinted: "✅ Το διαπιστευτήριο έχει ήδη εκδοθεί για αυτό το πορτοφόλι. <a href=\"{explorerAddressUrl}\" target=\"_blank\" rel=\"noreferrer\">Δείτε το στον Dimikog Block Explorer</a>.",
+        status_minting: "⏳ Υποβολή συναλλαγής...",
+        status_mintSuccess: "✅ Το διαπιστευτήριο εκδόθηκε. Δείτε το πορτοφόλι σας στον <a href=\"{explorerAddressUrl}\" target=\"_blank\" rel=\"noreferrer\">Dimikog Block Explorer</a> ή ελέγξτε τα <a href=\"{metadataUrl}\" target=\"_blank\" rel=\"noreferrer\">μεταδεδομένα IPFS που φιλοξενεί η Pinata</a>.",
+        status_mintError: "❌ Η έκδοση απέτυχε. Προσπαθήστε ξανά σε λίγα λεπτά.",
+        status_connectError: "❌ Η αίτηση σύνδεσης απορρίφθηκε ή απέτυχε.",
+        status_disconnected: "Το πορτοφόλι αποσυνδέθηκε."
+      }
+    };
+
+    const dynamicContent = {};
+    let currentLanguage = "en";
+
+    function translate(key, params = {}) {
+      const dictionary = translations[currentLanguage] || translations.en;
+      let template = dictionary[key];
+      if (template === undefined) {
+        template = translations.en[key] || "";
+      }
+      if (typeof template !== "string") {
+        return "";
+      }
+      return template.replace(/\{(\w+)\}/g, (_, token) => {
+        if (Object.prototype.hasOwnProperty.call(params, token)) {
+          return params[token];
+        }
+        return `{${token}}`;
+      });
+    }
+
+    function applyTranslations() {
+      document.title = translate("pageTitle");
+      const titleElement = document.querySelector("title[data-i18n-key]");
+      if (titleElement) {
+        titleElement.textContent = document.title;
+      }
+
+      document.querySelectorAll("[data-i18n-key]").forEach(element => {
+        if (element.tagName === "TITLE") {
+          return;
+        }
+        const key = element.getAttribute("data-i18n-key");
+        const attr = element.getAttribute("data-i18n-attr");
+        const type = element.getAttribute("data-i18n-type");
+        const value = translate(key);
+        if (attr) {
+          element.setAttribute(attr, value);
+        } else if (type === "html") {
+          element.innerHTML = value;
+        } else {
+          element.textContent = value;
+        }
+      });
+
+      Object.entries(dynamicContent).forEach(([elementId, config]) => {
+        const element = document.getElementById(elementId);
+        if (!element) {
+          return;
+        }
+        const value = translate(config.key, config.params);
+        if (config.html) {
+          element.innerHTML = value;
+        } else {
+          element.innerText = value;
+        }
+      });
+    }
+
+    function updateLanguageButtons() {
+      document.querySelectorAll(".language-option").forEach(button => {
+        const isActive = button.dataset.lang === currentLanguage;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    }
+
+    function setLanguage(lang) {
+      if (!translations[lang]) {
+        lang = "en";
+      }
+      currentLanguage = lang;
+      document.documentElement.lang = lang === "el" ? "el" : "en";
+      applyTranslations();
+      updateLanguageButtons();
+      try {
+        localStorage.setItem("language", lang);
+      } catch (err) {
+        console.warn("Unable to persist language preference:", err);
+      }
+    }
+
+    function setInitialLanguage() {
+      let detected = "en";
+      try {
+        const saved = localStorage.getItem("language");
+        if (saved && translations[saved]) {
+          detected = saved;
+        } else if (navigator.language && navigator.language.toLowerCase().startsWith("el")) {
+          detected = "el";
+        }
+      } catch (err) {
+        console.warn("Unable to access saved language preference:", err);
+      }
+      currentLanguage = detected;
+      document.documentElement.lang = detected === "el" ? "el" : "en";
+    }
+
+    function setupLanguageSwitcher() {
+      document.querySelectorAll(".language-option").forEach(button => {
+        button.addEventListener("click", () => {
+          const lang = button.dataset.lang;
+          if (!lang || lang === currentLanguage) {
+            return;
+          }
+          setLanguage(lang);
+        });
+      });
+      updateLanguageButtons();
+    }
+
+    function setDynamicContent(elementId, key, params = {}, options = {}) {
+      dynamicContent[elementId] = {
+        key,
+        params,
+        html: Boolean(options.html)
+      };
+      const element = document.getElementById(elementId);
+      if (!element) {
+        return;
+      }
+      const value = translate(key, params);
+      if (options.html) {
+        element.innerHTML = value;
+      } else {
+        element.innerText = value;
+      }
+    }
+
+    function clearDynamicContent(elementId) {
+      delete dynamicContent[elementId];
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.innerHTML = "";
+      }
+    }
+
+    setInitialLanguage();
+    applyTranslations();
+    setupLanguageSwitcher();
 
     let provider, signer, contract;
     const connectButton = document.getElementById("connectButton");
     const mintButton = document.getElementById("mintButton");
     const disconnectButton = document.getElementById("disconnectButton");
-    const walletInfo = document.getElementById("walletInfo");
-    const status = document.getElementById("status");
     const sbtImage = document.getElementById("sbtImage");
 
     async function showSBTImage() {
       try {
-        const response = await fetch("https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24");
+        const response = await fetch(METADATA_URL);
         const metadata = await response.json();
         let imageUrl = metadata.image;
-        if (imageUrl.startsWith("ipfs://")) {
+        if (typeof imageUrl === "string" && imageUrl.startsWith("ipfs://")) {
           imageUrl = imageUrl.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/");
         }
-        sbtImage.src = imageUrl;
-        sbtImage.style.display = "block";
+        if (imageUrl) {
+          sbtImage.src = imageUrl;
+          sbtImage.style.display = "block";
+        } else {
+          sbtImage.style.display = "none";
+        }
       } catch (err) {
         console.error("Failed to load SBT image:", err);
         sbtImage.style.display = "none";
@@ -384,7 +655,7 @@
 
     async function connectWallet() {
       if (!window.ethereum) {
-        alert("A Web3 wallet (e.g., MetaMask) is required to continue.");
+        alert(translate("alert_noWallet"));
         return;
       }
 
@@ -396,30 +667,47 @@
         const address = await signer.getAddress();
         const network = await provider.getNetwork();
 
-        walletInfo.innerHTML = `Connected wallet: ${address}<br/>Network: ${network.name || "Custom"} (chain ID ${network.chainId})`;
+        const networkName = network.name || translate("network_custom");
+        setDynamicContent("walletInfo", "walletInfo_connected", {
+          address,
+          network: networkName,
+          chainId: network.chainId
+        }, { html: true });
+
         connectButton.style.display = "none";
         mintButton.style.display = "none";
         disconnectButton.style.display = "inline-block";
 
         if (network.chainId !== EXPECTED_NETWORK.chainId) {
-          status.innerHTML = `Wallet connected on <strong>chain ID ${network.chainId}</strong>. Switch to <strong>${EXPECTED_NETWORK.name}</strong> (chain ID ${EXPECTED_NETWORK.chainId}) and reconnect.`;
+          setDynamicContent("status", "status_wrongNetwork", {
+            chainId: network.chainId,
+            expectedName: EXPECTED_NETWORK.name,
+            expectedChainId: EXPECTED_NETWORK.chainId
+          }, { html: true });
+          sbtImage.style.display = "none";
           return;
         }
 
         try {
           const contractCode = await provider.getCode(CONTRACT_ADDRESS);
           if (!contractCode || contractCode === "0x") {
-            status.innerText = `Contract not found on ${EXPECTED_NETWORK.name}. Please confirm RPC ${EXPECTED_NETWORK.rpc} is reachable.`;
+            setDynamicContent("status", "status_contractMissing", {
+              network: EXPECTED_NETWORK.name,
+              rpc: EXPECTED_NETWORK.rpc
+            });
+            sbtImage.style.display = "none";
             return;
           }
         } catch (codeError) {
           console.warn("Unable to fetch contract code:", codeError);
-          status.innerText = `Connected to ${EXPECTED_NETWORK.name}, but contract lookup failed. Please retry shortly.`;
+          setDynamicContent("status", "status_contractLookupFailed", {
+            network: EXPECTED_NETWORK.name
+          });
+          sbtImage.style.display = "none";
           return;
         }
 
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-
         mintButton.style.display = "inline-block";
 
         let alreadyMinted = false;
@@ -434,30 +722,41 @@
 
         if (alreadyMinted) {
           mintButton.style.display = "none";
-          status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Dimikog Block Explorer</a>.`;
+          setDynamicContent("status", "status_alreadyMinted", {
+            explorerAddressUrl: `${BLOCK_EXPLORER_BASE}/address/${address}`
+          }, { html: true });
           await showSBTImage();
         } else if (statusVerified) {
-          status.innerText = `Wallet connected. Ready to mint your credential on ${EXPECTED_NETWORK.name}.`;
+          setDynamicContent("status", "status_ready", {
+            network: EXPECTED_NETWORK.name
+          });
+          sbtImage.style.display = "none";
         } else {
-          status.innerText = `Wallet connected, but the credential status could not be verified. Please confirm you remain on ${EXPECTED_NETWORK.name} before minting.`;
+          setDynamicContent("status", "status_unverified", {
+            network: EXPECTED_NETWORK.name
+          });
+          sbtImage.style.display = "none";
         }
       } catch (err) {
         console.error(err);
-        status.innerText = "❌ Connection request declined or failed.";
+        setDynamicContent("status", "status_connectError");
       }
     }
 
     async function mintSBT() {
-      status.innerText = "⏳ Submitting transaction...";
+      setDynamicContent("status", "status_minting");
       try {
         const address = await signer.getAddress();
         const tx = await contract.mint();
         await tx.wait();
-        status.innerHTML = `✅ Credential issued. Review your wallet on the <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Dimikog Block Explorer</a> or inspect the <a href="https://gateway.pinata.cloud/ipfs/bafkreif5j3xc7wjubr2kelt7kkmhxtp25mswznpf7do63hpyjirn2aui24" target="_blank" rel="noreferrer">Pinata-hosted IPFS metadata</a>.`;
+        setDynamicContent("status", "status_mintSuccess", {
+          explorerAddressUrl: `${BLOCK_EXPLORER_BASE}/address/${address}`,
+          metadataUrl: METADATA_URL
+        }, { html: true });
         await showSBTImage();
       } catch (err) {
         console.error(err);
-        status.innerText = "❌ Mint unsuccessful. Please try again in a few moments.";
+        setDynamicContent("status", "status_mintError");
       }
     }
 
@@ -468,8 +767,8 @@
       connectButton.style.display = "inline-block";
       mintButton.style.display = "none";
       disconnectButton.style.display = "none";
-      walletInfo.innerText = "";
-      status.innerText = "Wallet disconnected.";
+      clearDynamicContent("walletInfo");
+      setDynamicContent("status", "status_disconnected");
       sbtImage.style.display = "none";
     }
 
