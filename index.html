@@ -315,7 +315,7 @@
       <h2>About this token</h2>
       <ul>
         <li>Open mint: available to anyone with an Ethereum-compatible wallet.</li>
-        <li>Non-transferable design ensures provenance on the dimikog network.</li>
+        <li>Non-transferable design ensures provenance on the QBFT_Besu_EduNet network.</li>
         <li>Metadata stored on IPFS via Pinata for transparent, verifiable ownership.</li>
       </ul>
     </section>
@@ -386,10 +386,18 @@
         const address = await signer.getAddress();
         walletInfo.innerText = `Connected wallet: ${address}`;
         connectButton.style.display = "none";
-        mintButton.style.display = "inline-block";
+        mintButton.style.display = "none";
         disconnectButton.style.display = "inline-block";
 
+        const contractCode = await provider.getCode(CONTRACT_ADDRESS);
+        if (!contractCode || contractCode === "0x") {
+          status.innerText = "Wallet connected on an unsupported network. Please switch to the QBFT_Besu_EduNet network and reconnect.";
+          return;
+        }
+
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+
+        mintButton.style.display = "inline-block";
 
         let alreadyMinted = false;
         let statusVerified = true;
@@ -402,12 +410,13 @@
         }
 
         if (alreadyMinted) {
+          mintButton.style.display = "none";
           status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Dimikog Block Explorer</a>.`;
           await showSBTImage();
         } else if (statusVerified) {
           status.innerText = "Wallet connected. Ready to mint your credential.";
         } else {
-          status.innerText = "Wallet connected, but the credential status could not be verified. Please confirm you are on the Dimikog network before minting.";
+          status.innerText = "Wallet connected, but the credential status could not be verified. Please confirm you are on the QBFT_Besu_EduNet network before minting.";
         }
       } catch (err) {
         console.error(err);
