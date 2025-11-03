@@ -391,12 +391,23 @@
 
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 
-        const alreadyMinted = await contract.hasMinted(address);
+        let alreadyMinted = false;
+        let statusVerified = true;
+
+        try {
+          alreadyMinted = await contract.hasMinted(address);
+        } catch (checkError) {
+          console.warn("Unable to confirm mint status:", checkError);
+          statusVerified = false;
+        }
+
         if (alreadyMinted) {
           status.innerHTML = `✅ Credential already issued for this wallet. <a href='https://blockexplorer.dimikog.org/address/${address}' target='_blank' rel='noreferrer'>Review on Dimikog Block Explorer</a>.`;
           await showSBTImage();
-        } else {
+        } else if (statusVerified) {
           status.innerText = "Wallet connected. Ready to mint your credential.";
+        } else {
+          status.innerText = "Wallet connected, but the credential status could not be verified. Please confirm you are on the Dimikog network before minting.";
         }
       } catch (err) {
         console.error(err);
